@@ -7,15 +7,11 @@ const session    = require('express-session');
 const flash      = require('connect-flash');
 const bodyParser = require('body-parser');
 const path       = require('path');
-const MongoStore = require('connect-mongo'); // Added for production session storage
 
 const app = express();
 
 // Connect to MongoDB using the URI from .env
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.log(err));
 
@@ -23,15 +19,11 @@ mongoose.connect(process.env.MONGO_URI, {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Configure sessions using secret from .env, replacing the default MemoryStore with MongoStore for a production-ready environment.
+// Configure sessions using secret from .env
 app.use(session({
   secret: process.env.SECRET_KEY,
   resave: true,
-  saveUninitialized: true,
-  store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URI,
-      collectionName: 'sessions'
-  })
+  saveUninitialized: true
 }));
 
 // Connect Flash for flash messages
@@ -47,8 +39,6 @@ app.use((req, res, next) => {
 
 // Set EJS as templating engine
 app.set('view engine', 'ejs');
-// Specify the views folder (this fixes the error where Express can't locate the "login" view)
-app.set('views', path.join(__dirname, 'views'));
 
 // Serve static files from public folder
 app.use(express.static(path.join(__dirname, 'public')));
