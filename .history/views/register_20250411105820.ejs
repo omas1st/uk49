@@ -19,19 +19,15 @@
     <form action="/register" method="POST">
       <div class="form-group">
         <label>Name:</label>
-        <input type="text" name="name" value="<%= typeof name !== 'undefined' ? name : '' %>" required>
+        <input type="text" name="name" required>
       </div>
       <div class="form-group">
         <label>Username:</label>
-        <input type="text" name="username" value="<%= typeof username !== 'undefined' ? username : '' %>" required>
+        <input type="text" name="username" required>
       </div>
       <div class="form-group">
         <label>Email:</label>
-        <input type="email" name="email" value="<%= typeof email !== 'undefined' ? email : '' %>" required>
-      </div>
-      <div class="form-group">
-        <label>WhatsApp Number:</label>
-        <input type="tel" name="whatsapp" value="<%= typeof whatsapp !== 'undefined' ? whatsapp : '' %>" required>
+        <input type="email" name="email" required>
       </div>
       <div class="form-group">
         <label>Password:</label>
