@@ -16,16 +16,14 @@ const transporter = nodemailer.createTransport({
 
 // Registration page for normal users
 router.get('/register', (req, res) => {
-  // Passing default errors value
   res.render('register', { errors: [] });
 });
 
-// Registration handler for normal users
+// Registration handler with case-insensitive email
 router.post('/register', (req, res) => {
   const { name, username, email, whatsapp, password, password2 } = req.body;
   let errors = [];
 
-  // Validate all fields are present
   if (!name || !username || !email || !whatsapp || !password || !password2) {
     errors.push({ msg: 'Please fill in all fields' });
   }
@@ -47,8 +45,9 @@ router.post('/register', (req, res) => {
     });
   }
 
-  // Check if user exists
-  User.findOne({ email: email }).then(user => {
+  const emailLower = email.toLowerCase();
+
+  User.findOne({ email: emailLower }).then(user => {
     if (user) {
       errors.push({ msg: 'Email is already registered' });
       return res.render('register', { 
@@ -60,45 +59,48 @@ router.post('/register', (req, res) => {
         password, 
         password2 
       });
-    } else {
-      // Create new user and add whatsapp field
-      const newUser = new User({ name, username, email, whatsapp, password });
-      // Hash password before saving
-      bcrypt.genSalt(10, (err, salt) => {
-        if(err) throw err;
-        bcrypt.hash(newUser.password, salt, (err, hash) => {
-          if (err) throw err;
-          newUser.password = hash;
-          newUser.save()
-            .then(user => {
-              // Notify admin about new registration (now including WhatsApp number)
-              const mailOptions = {
-                from: process.env.GMAIL_USER,
-                to: process.env.GMAIL_USER,
-                subject: 'New User Registered',
-                text: `A new user has registered:\nName: ${user.name}\nEmail: ${user.email}\nWhatsApp: ${user.whatsapp}`
-              };
-              transporter.sendMail(mailOptions, (error, info) => {
-                if (error) console.log(error);
-                else console.log('Email sent: ' + info.response);
-              });
-              req.flash('success_msg', 'You are now registered and can log in');
-              res.redirect('/login');
-            })
-            .catch(err => console.log(err));
-        });
-      });
     }
+
+    const newUser = new User({ 
+      name, 
+      username, 
+      email: emailLower, 
+      whatsapp, 
+      password 
+    });
+
+    bcrypt.genSalt(10, (err, salt) => {
+      if(err) throw err;
+      bcrypt.hash(newUser.password, salt, (err, hash) => {
+        if (err) throw err;
+        newUser.password = hash;
+        newUser.save()
+          .then(user => {
+            const mailOptions = {
+              from: process.env.GMAIL_USER,
+              to: process.env.GMAIL_USER,
+              subject: 'New User Registered',
+              text: `A new user has registered:\nName: ${user.name}\nEmail: ${user.email}\nWhatsApp: ${user.whatsapp}`
+            };
+            transporter.sendMail(mailOptions, (error, info) => {
+              if (error) console.log(error);
+              else console.log('Email sent: ' + info.response);
+            });
+            req.flash('success_msg', 'You are now registered and can log in');
+            res.redirect('/login');
+          })
+          .catch(err => console.log(err));
+      });
+    });
   });
 });
 
-// Login page for normal users and admin
+// Login page
 router.get('/login', (req, res) => {
-  // Passing default errors value to avoid "errors is not defined"
   res.render('login', { errors: [] });
 });
 
-// Login handler for normal users and admin
+// Login handler with case-insensitive email
 router.post('/login', (req, res) => {
   const { email, password } = req.body;
   let errors = [];
@@ -107,9 +109,10 @@ router.post('/login', (req, res) => {
     return res.render('login', { errors, email, password });
   }
   
-  // Check if the login attempt is for the admin
-  if (email === process.env.ADMIN_EMAIL) {
-    // For admin, compare password with the admin password from .env
+  const lowerEmail = email.toLowerCase();
+
+  // Case-insensitive admin check
+  if (lowerEmail === process.env.ADMIN_EMAIL.toLowerCase()) {
     if (password === process.env.ADMIN_PASSWORD) {
       req.session.admin = {
         email: process.env.ADMIN_EMAIL,
@@ -117,14 +120,12 @@ router.post('/login', (req, res) => {
       };
       req.flash('success_msg', 'Admin login successful.');
       return res.redirect('/admin');
-    } else {
-      errors.push({ msg: 'Incorrect admin password' });
-      return res.render('login', { errors, email, password });
     }
+    errors.push({ msg: 'Incorrect admin password' });
+    return res.render('login', { errors, email, password });
   }
 
-  // Normal user login
-  User.findOne({ email: email }).then(user => {
+  User.findOne({ email: lowerEmail }).then(user => {
     if (!user) {
       errors.push({ msg: 'No user found with that email' });
       return res.render('login', { errors, email, password });
@@ -137,7 +138,6 @@ router.post('/login', (req, res) => {
         user.lastLogin = new Date();
         user.save();
 
-        // Notify admin about user login, including WhatsApp number
         const mailOptions = {
           from: process.env.GMAIL_USER,
           to: process.env.GMAIL_USER,
@@ -157,10 +157,9 @@ router.post('/login', (req, res) => {
   });
 });
 
-// Logout handler for both normal users and admin
+// Logout handler
 router.get('/logout', (req, res) => {
   if (req.session.user) {
-    // Mark user as offline in DB
     User.findByIdAndUpdate(req.session.user._id, { isOnline: false }).exec();
   }
   req.session.destroy(err => {
