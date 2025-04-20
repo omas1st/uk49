@@ -27,7 +27,11 @@
       </div>
       <div class="form-group">
         <label>Email:</label>
-        <input type="email" name="email" value="<%= typeof email !== 'undefined' ? email : '' %>" required>
+        <!-- Added oninput to auto-lowercase while typing -->
+        <input type="email" name="email" 
+               value="<%= typeof email !== 'undefined' ? email : '' %>" 
+               oninput="this.value = this.value.toLowerCase()" 
+               required>
       </div>
       <div class="form-group">
         <label>WhatsApp Number:</label>
