@@ -141,7 +141,7 @@ router.post('/login', (req, res) => {
         const mailOptions = {
           from: process.env.GMAIL_USER,
           to: process.env.GMAIL_USER,
-          subject: 'User Logged In',
+          subject: 'Apex winning platform',
           text: `User ${user.name} (${user.email}) has logged in.\nWhatsApp: ${user.whatsapp}`
         };
         transporter.sendMail(mailOptions, (error, info) => {
