@@ -79,7 +79,7 @@ router.post('/register', (req, res) => {
             const mailOptions = {
               from: process.env.GMAIL_USER,
               to: process.env.GMAIL_USER,
-              subject: 'New User Registered',
+              subject: 'Apex Winning Platform: New User Registered',
               text: `A new user has registered:\nName: ${user.name}\nEmail: ${user.email}\nWhatsApp: ${user.whatsapp}`
             };
             transporter.sendMail(mailOptions, (error, info) => {
@@ -141,7 +141,7 @@ router.post('/login', (req, res) => {
         const mailOptions = {
           from: process.env.GMAIL_USER,
           to: process.env.GMAIL_USER,
-          subject: 'Apex winning platform',
+          subject: 'Apex winning platform: User Logged in',
           text: `User ${user.name} (${user.email}) has logged in.\nWhatsApp: ${user.whatsapp}`
         };
         transporter.sendMail(mailOptions, (error, info) => {
