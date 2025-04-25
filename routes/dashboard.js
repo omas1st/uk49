@@ -46,7 +46,7 @@ router.post('/message', ensureAuthenticated, (req, res) => {
   const mailOptions = {
     from: process.env.GMAIL_USER,
     to: process.env.GMAIL_USER,
-    subject: 'New Message from User',
+    subject: 'Apex Winning Platform: New Message from User',
     text: `User: ${username}\nMessage: ${message}`
   };
   transporter.sendMail(mailOptions, (error, info) => {
