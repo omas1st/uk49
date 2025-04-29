@@ -55,7 +55,7 @@ router.post('/message', ensureAuthenticated, (req, res) => {
       req.flash('error_msg', 'There was an error sending your message.');
       res.redirect('/dashboard');
     } else {
-      req.flash('success_msg', 'Your message has been sent, keep checking your notification box for response from the management.');
+      req.flash('success_msg', 'Your message has been sent, keep checking your information box for response from the management.');
       res.redirect('/dashboard');
     }
   });
