@@ -79,59 +79,347 @@
   <script>
     // Testimonial data with "Success Winning Platform" replaced by "Apex Winning Platform"
     const testimonials = [
-      {
-        id: 'sipho',
-        name: 'Sipho',
-        text: 'I almost gave up after so many losses, but Apex Winning Platform changed everything. I activated my account and won R450,000 — life literally turned around for me.'
-      },
-      {
-        id: 'lerato',
-        name: 'Lerato',
-        text: 'After falling for scams before, I finally trusted Apex Winning Platform. I won R780,000 right after activation — I can’t stop smiling.'
-      },
-      {
-        id: 'kagiso',
-        name: 'Kagiso',
-        text: 'I was skeptical at first, but their numbers worked. I won R1,150,000 and now I have money to support my family.'
-      },
-      {
-        id: 'thabo',
-        name: 'Thabo',
-        text: 'I thought wins like this never happen to me. After activating, I got the numbers and won R250,000 — unbelievable!'
-      },
-      {
-        id: 'mbali',
-        name: 'Mbali',
-        text: 'Endless losses had me down. Apex Winning Platform restored my hope — I won R960,000 after activation.'
-      },
-      {
-        id: 'andile',
-        name: 'Andile',
-        text: 'I joined as a last chance and it paid off. I won R310,000 — the process was simple and fast.'
-      },
-      {
-        id: 'nomvula',
-        name: 'Nomvula',
-        text: 'Scammed many times before. This time I won R520,000 with Apex Winning Platform. I’m so grateful to the admins.'
-      },
-      {
-        id: 'jabulani',
-        name: 'Jabulani',
-        text: 'I never expected a win this big. After activation I won R1,800,000 — life-changing is an understatement.'
-      },
-      {
-        id: 'nthabiseng',
-        name: 'Nthabiseng',
-        text: 'I had lost hope but decided to try one more time. I won R195,000 right after activating my account — thank you!'
-      },
-      {
-        id: 'tshepo',
-        name: 'Tshepo',
-        text: 'This platform is real. I followed instructions and won R660,000. Finally I can start my small business.'
-      }
-      // Additional testimonials would be added here following the same pattern
-    ];
-
+  {
+    id: 'sipho',
+    name: 'Sipho',
+    text: 'I almost gave up after so many losses, but Apex Winning Platform changed everything. I activated my account and won R450,000 — life literally turned around for me.'
+  },
+  {
+    id: 'lerato',
+    name: 'Lerato',
+    text: 'After falling for scams before, I finally trusted Apex Winning Platform. I won R780,000 right after activation — I can’t stop smiling.'
+  },
+  {
+    id: 'kagiso',
+    name: 'Kagiso',
+    text: 'I was skeptical at first, but their numbers worked. I won R1,150,000 and now I have money to support my family.'
+  },
+  {
+    id: 'thabo',
+    name: 'Thabo',
+    text: 'I thought wins like this never happen to me. After activating, I got the numbers and won R250,000 — unbelievable!'
+  },
+  {
+    id: 'mbali',
+    name: 'Mbali',
+    text: 'Endless losses had me down. Apex Winning Platform restored my hope — I won R960,000 after activation.'
+  },
+  {
+    id: 'andile',
+    name: 'Andile',
+    text: 'I joined as a last chance and it paid off. I won R310,000 — the process was simple and fast.'
+  },
+  {
+    id: 'nomvula',
+    name: 'Nomvula',
+    text: 'Scammed many times before. This time I won R520,000 with Apex Winning Platform. I’m so grateful to the admins.'
+  },
+  {
+    id: 'jabulani',
+    name: 'Jabulani',
+    text: 'I never expected a win this big. After activation I won R1,800,000 — life-changing is an understatement.'
+  },
+  {
+    id: 'nthabiseng',
+    name: 'Nthabiseng',
+    text: 'I had lost hope but decided to try one more time. I won R195,000 right after activating my account — thank you!'
+  },
+  {
+    id: 'tshepo',
+    name: 'Tshepo',
+    text: 'This platform is real. I followed instructions and won R660,000. Finally I can start my small business.'
+  },
+  {
+    id: 'kabelo',
+    name: 'Kabelo',
+    text: 'I was skeptical, now I’m a believer — R400,000 landed in my life after I activated. Thank you Apex Winning Platform.'
+  },
+  {
+    id: 'mpumi',
+    name: 'Mpumi',
+    text: 'After many disappointments, I got a real win. I won R220,000 — this platform restored my trust.'
+  },
+  {
+    id: 'vusi',
+    name: 'Vusi',
+    text: 'I finally won big after years of losses. R1,250,000 came through after activation — I’m speechless.'
+  },
+  {
+    id: 'nolwazi',
+    name: 'Nolwazi',
+    text: 'I activated my account and the numbers were spot on. I won R350,000 and can now fix my house roof.'
+  },
+  {
+    id: 'roland',
+    name: 'Roland',
+    text: 'I didn’t believe at first but got R520,000 after activation. This platform delivered as promised.'
+  },
+  {
+    id: 'anele',
+    name: 'Anele',
+    text: 'After falling for scams before, Apex Winning Platform gave me clarity and a win — R715,000!'
+  },
+  {
+    id: 'kgopotso',
+    name: 'Kgopotso',
+    text: 'I was on the verge of quitting UK49s, then I tried Apex Winning Platform and won R285,000 right away.'
+  },
+  {
+    id: 'zinhle',
+    name: 'Zinhle',
+    text: 'What a relief — I won R540,000 after activating. The team was professional and supportive.'
+  },
+  {
+    id: 'mpho',
+    name: 'Mpho',
+    text: 'From constant losses to a big win: R1,900,000 after I followed the instructions. I’m forever grateful.'
+  },
+  {
+    id: 'sibongile',
+    name: 'Sibongile',
+    text: 'I took a chance and it paid off. Won R180,000 after activation — such a blessing.'
+  },
+  {
+    id: 'nelson',
+    name: 'Nelson',
+    text: 'I won R600,000 and can finally pay off my debts. Apex Winning Platform truly works.'
+  },
+  {
+    id: 'bongekile',
+    name: 'Bongekile',
+    text: 'I’d been through scams, but this time I won R330,000 after activating my account. Thank you.'
+  },
+  {
+    id: 'pieter',
+    name: 'Pieter',
+    text: 'I tried other services before with no luck. Here I won R200,000 after activation — very happy.'
+  },
+  {
+    id: 'anika',
+    name: 'Anika',
+    text: 'After endless losses, a real win finally came: R470,000. I’m relieved and thankful.'
+  },
+  {
+    id: 'sifiso',
+    name: 'Sifiso',
+    text: 'This platform changed my life — I won R1,010,000 right after activating my account.'
+  },
+  {
+    id: 'lebohang',
+    name: 'Lebohang',
+    text: 'I was desperate but decided to try one last time. I won R240,000 — unbelievable feeling.'
+  },
+  {
+    id: 'thuli',
+    name: 'Thuli',
+    text: 'Apex Winning Platform delivered when others failed. I won R390,000 after activation.'
+  },
+  {
+    id: 'rewind',
+    name: 'Rewind',
+    text: 'I wasn’t hopeful but the numbers were accurate — R1,600,000 credited after activation. Life transformed.'
+  },
+  {
+    id: 'zuma',
+    name: 'Zuma',
+    text: 'After many losses I finally saw a real win. I won R155,000 and can breathe again.'
+  },
+  {
+    id: 'olwethu',
+    name: 'Olwethu',
+    text: 'I won R980,000 and it paid for my child’s schooling. Cannot thank the admins enough.'
+  },
+  {
+    id: 'kyle',
+    name: 'Kyle',
+    text: 'I tried Apex Winning Platform out of curiosity and won R370,000 — everything was handled professionally.'
+  },
+  {
+    id: 'raph',
+    name: 'Raph',
+    text: 'After many bad experiences, I finally won R430,000. This platform is trustworthy.'
+  },
+  {
+    id: 'masego',
+    name: 'Masego',
+    text: 'I almost gave up on UK49s — then this platform helped me win R650,000. So thankful.'
+  },
+  {
+    id: 'dineo',
+    name: 'Dineo',
+    text: 'Three straight numbers and the bonus worked for me. I won R270,000 after activating my account.'
+  },
+  {
+    id: 'cedric',
+    name: 'Cedric',
+    text: 'I won R1,300,000 and finally cleared my family’s debts. Truly a life-changing service.'
+  },
+  {
+    id: 'nomsa',
+    name: 'Nomsa',
+    text: 'I was nervous but it worked. R520,000 in winnings after activation — I’m thrilled.'
+  },
+  {
+    id: 'enzo',
+    name: 'Enzo',
+    text: 'After so many losses I believed there were no winners left — then I won R175,000. Thank you.'
+  },
+  {
+    id: 'phindile',
+    name: 'Phindile',
+    text: 'Apex Winning Platform turned my luck around — I won R840,000 right after activating my account.'
+  },
+  {
+    id: 'omphile',
+    name: 'Omphile',
+    text: 'I had tried everything. This was the real deal — R940,000 credited after activation.'
+  },
+  {
+    id: 'kevin',
+    name: 'Kevin',
+    text: 'I won R210,000 and used it to start a small shop. Grateful to the team for their support.'
+  },
+  {
+    id: 'nandi',
+    name: 'Nandi',
+    text: 'After years of losing, I finally won R560,000. This platform is the real deal for winners.'
+  },
+  {
+    id: 'tumi',
+    name: 'Tumi',
+    text: 'I activated and won R1,750,000 — I still can’t believe it. Changed my family’s future.'
+  },
+  {
+    id: 'gavin',
+    name: 'Gavin',
+    text: 'I was cynical but decided to try — it worked. I won R300,000 after activation.'
+  },
+  {
+    id: 'mihlali',
+    name: 'Mihlali',
+    text: 'I lost a lot before, but Apex Winning Platform helped me win R480,000. So happy right now.'
+  },
+  {
+    id: 'sanele',
+    name: 'Sanele',
+    text: 'I was on the edge of giving up. A win of R1,050,000 came after activation — life changing.'
+  },
+  {
+    id: 'pumla',
+    name: 'Pumla',
+    text: 'Exactly what I needed — R230,000 after I followed the instructions. Thank you Apex Winning Platform.'
+  },
+  {
+    id: 'bryan',
+    name: 'Bryan',
+    text: 'I won R710,000 and now I’m able to pay for my wife’s medical bills. Forever grateful.'
+  },
+  {
+    id: 'thandeka',
+    name: 'Thandeka',
+    text: 'This platform is different — won R490,000 right after activating. I’m now a true believer.'
+  },
+  {
+    id: 'phila',
+    name: 'Phila',
+    text: 'After many disappointments, I finally won R160,000 and that was enough to start fresh.'
+  },
+  {
+    id: 'morne',
+    name: 'Morne',
+    text: 'I used to doubt platforms like this, but I won R2,000,000 — it changed my life entirely.'
+  },
+  {
+    id: 'khumo',
+    name: 'Khumo',
+    text: 'R350,000 came after activation — I can now support my family and feel secure.'
+  },
+  {
+    id: 'zuko',
+    name: 'Zuko',
+    text: 'After so many losses, finally a win of R290,000. Thanks to Apex Winning Platform for being real.'
+  },
+  {
+    id: 'luyanda',
+    name: 'Luyanda',
+    text: 'I won R520,000 and used it to pay tuition fees. This platform gave my children a future.'
+  },
+  {
+    id: 'maru',
+    name: 'Maru',
+    text: 'I activated and won R410,000 — quick, smooth and trustworthy. Highly recommended.'
+  },
+  {
+    id: 'thandi',
+    name: 'Thandi',
+    text: 'I almost gave up betting on UK49s because of endless losses. Taking one last chance with Apex Winning Platform was the best decision ever. I won R320,000 and my life has changed!'
+  },
+  {
+    id: 'robert',
+    name: 'Robert',
+    text: 'I Won R1.2 MILLION after activation ✈️ Travelling SA with my queen. Life’s SHORT'
+  },
+  {
+    id: 'mahlaba',
+    name: 'Mahlaba',
+    text: 'I’d been scammed and lost count of my losses. But Apex Winning Platform gave me a real win, R800,000 won just after activating my account!'
+  },
+  {
+    id: 'modiba',
+    name: 'Modiba',
+    text: 'I’ve tried many platforms, but this is the only one that delivered. I won R300,000. Dreams do come true!'
+  },
+  {
+    id: 'sphelele',
+    name: 'Sphelele',
+    text: 'I was skeptical at first, but after winning R160,000, I’m now a true believer. The process was simple and the results were real.'
+  },
+  {
+    id: 'sbusiso',
+    name: 'Sbusiso',
+    text: 'With R430,000 in winnings, I can finally renovate my home. I’m so thankful for this platform and the admin.'
+  },
+  {
+    id: 'ntombikhona',
+    name: 'Ntombikhona',
+    text: 'After endless losses and scams, I tried Apex Winning Platform as my last hope. Their numbers brought me R1,100,000 unbelievable!'
+  },
+  {
+    id: 'william',
+    name: 'William',
+    text: 'I was shocked when I saw I had won R600,000. This platform is the real deal for anyone looking to win big.'
+  },
+  {
+    id: 'thamsanqa',
+    name: 'Thamsanqa',
+    text: 'After activating my account, I received my numbers and won R1,300,000! I’m forever grateful for this life-changing win.'
+  },
+  {
+    id: 'john',
+    name: 'John',
+    text: 'I never thought I’d win after so many disappointments. Apex Winning Platform gave me 3 straight numbers and bonus after i activated my account. I won R750,000!'
+  },
+  {
+    id: 'kgomotso',
+    name: 'Kgomotso',
+    text: 'I never imagined I’d win R350,000 so quickly. This platform is trustworthy and delivers on its promises.'
+  },
+  {
+    id: 'annah',
+    name: 'Annah',
+    text: 'I nearly gave up on betting, but Apex Winning Platform’s winning numbers changed my story. I won R950,000 and I’m so grateful., thanks to Apex wining platform and its admins'
+  },
+  {
+    id: 'dingane',
+    name: 'Dingane',
+    text: 'I was on the verge of quitting UK49s for good after so many losses and falling for scams. But after joining Apex Winning Platform, I won R450,000 with their 3 straight numbers and bonus! I can’t believe my luck finally changed.'
+  },
+  {
+    id: 'daniel',
+    name: 'Daniel',
+    text: 'Honestly, I had lost all hope in UK49s. Scammers took so much from me. But Apex Winning Platform restored my faith. I won R120,000 right after activating my account!'
+  }
+];
     // Function to shuffle array randomly
     function shuffleArray(array) {
       for (let i = array.length - 1; i > 0; i--) {
