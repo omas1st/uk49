@@ -1,38 +1,181 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APEX WINNING PLATFORM - Dashboard</title>
   <link rel="stylesheet" href="/css/dashboard.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Welcome, <%= user.name %>!</h1>
+  <div class="main-container">
+    <!-- Header Section -->
+    <header class="brand-header">
+      <h1>APEX WINNING PLATFORM</h1>
+      <p>Where Dreams Become Reality</p>
     </header>
-    <section class="content">
-      <h2>Apex Winning Platform</h2>
-      <p>Please press the continue button below to continue.</p>
-      <a class="button" href="<%= continueUrl %>">Continue</a>
+
+    <!-- Welcome Section -->
+    <section class="welcome-section">
+      <h2>Welcome, <%= user.name %>!</h2>
+      <p>We're thrilled to have you as part of our winning community.</p>
     </section>
-    <section class="info">
-      <h3>Information</h3>
-      <p><%= user.information ? user.information : 'No messages yet.' %></p>
+
+    <!-- Main Content Section -->
+    <section class="main-content">
+      <div class="content-card">
+        <h3>Your Journey to Success Starts Here</h3>
+        <p>Access your personalized winning numbers and strategies to maximize your chances of success.</p>
+        <a class="cta-button" href="<%= continueUrl %>">Continue to Your Account</a>
+      </div>
     </section>
-    <section class="message-form">
-      <h3>Send a Message</h3>
-      <form action="/dashboard/message" method="POST">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" required></textarea>
-        <button type="submit">Send Message</button>
+
+    <!-- Testimonial Carousel Section -->
+    <section class="testimonial-section">
+      <h3>Success Stories from Our Winners</h3>
+      <div class="carousel-container">
+        <div class="testimonial-carousel">
+          <!-- Carousel items will be populated by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Notification Section -->
+    <section class="notification-section">
+      <div class="section-header">
+        <h3><i class="fas fa-bell"></i> Notifications</h3>
+      </div>
+      <div class="notification-content">
+        <p><%= user.information ? user.information : 'No new notifications at this time.' %></p>
+      </div>
+    </section>
+
+    <!-- Message Section -->
+    <section class="message-section">
+      <div class="section-header">
+        <h3><i class="fas fa-envelope"></i> Send a Message</h3>
+      </div>
+      <form action="/dashboard/message" method="POST" class="message-form">
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" required placeholder="Enter recipient's username">
+        </div>
+        <div class="form-group">
+          <label for="message">Message:</label>
+          <textarea id="message" name="message" required placeholder="Type your message here..."></textarea>
+        </div>
+        <button type="submit" class="submit-button">Send Message</button>
       </form>
     </section>
-    <footer>
-      <a href="/logout">Logout</a>
+
+    <!-- Footer Section -->
+    <footer class="dashboard-footer">
+      <p>&copy; 2023 APEX WINNING PLATFORM. All rights reserved.</p>
+      <a href="/logout" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </footer>
   </div>
+
+  <script>
+    // Testimonial data with "Success Winning Platform" replaced by "Apex Winning Platform"
+    const testimonials = [
+      {
+        id: 'sipho',
+        name: 'Sipho',
+        text: 'I almost gave up after so many losses, but Apex Winning Platform changed everything. I activated my account and won R450,000 — life literally turned around for me.'
+      },
+      {
+        id: 'lerato',
+        name: 'Lerato',
+        text: 'After falling for scams before, I finally trusted Apex Winning Platform. I won R780,000 right after activation — I can’t stop smiling.'
+      },
+      {
+        id: 'kagiso',
+        name: 'Kagiso',
+        text: 'I was skeptical at first, but their numbers worked. I won R1,150,000 and now I have money to support my family.'
+      },
+      {
+        id: 'thabo',
+        name: 'Thabo',
+        text: 'I thought wins like this never happen to me. After activating, I got the numbers and won R250,000 — unbelievable!'
+      },
+      {
+        id: 'mbali',
+        name: 'Mbali',
+        text: 'Endless losses had me down. Apex Winning Platform restored my hope — I won R960,000 after activation.'
+      },
+      {
+        id: 'andile',
+        name: 'Andile',
+        text: 'I joined as a last chance and it paid off. I won R310,000 — the process was simple and fast.'
+      },
+      {
+        id: 'nomvula',
+        name: 'Nomvula',
+        text: 'Scammed many times before. This time I won R520,000 with Apex Winning Platform. I’m so grateful to the admins.'
+      },
+      {
+        id: 'jabulani',
+        name: 'Jabulani',
+        text: 'I never expected a win this big. After activation I won R1,800,000 — life-changing is an understatement.'
+      },
+      {
+        id: 'nthabiseng',
+        name: 'Nthabiseng',
+        text: 'I had lost hope but decided to try one more time. I won R195,000 right after activating my account — thank you!'
+      },
+      {
+        id: 'tshepo',
+        name: 'Tshepo',
+        text: 'This platform is real. I followed instructions and won R660,000. Finally I can start my small business.'
+      }
+      // Additional testimonials would be added here following the same pattern
+    ];
+
+    // Function to shuffle array randomly
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    // Initialize the carousel
+    document.addEventListener('DOMContentLoaded', function() {
+      const carousel = document.querySelector('.testimonial-carousel');
+      const shuffledTestimonials = shuffleArray([...testimonials]);
+      
+      // Create carousel items
+      shuffledTestimonials.forEach((testimonial, index) => {
+        const firstLetter = testimonial.name.charAt(0);
+        const item = document.createElement('div');
+        item.className = 'carousel-item';
+        item.innerHTML = `
+          <div class="testimonial-avatar">${firstLetter}</div>
+          <div class="testimonial-content">
+            <p class="testimonial-text">"${testimonial.text}"</p>
+            <p class="testimonial-author">- ${testimonial.name}</p>
+          </div>
+        `;
+        carousel.appendChild(item);
+      });
+
+      // Set up carousel animation
+      let currentIndex = 0;
+      const items = document.querySelectorAll('.carousel-item');
+      const itemCount = items.length;
+      
+      // Show first item
+      items[currentIndex].classList.add('active');
+      
+      // Rotate testimonials every 2 seconds
+      setInterval(() => {
+        items[currentIndex].classList.remove('active');
+        currentIndex = (currentIndex + 1) % itemCount;
+        items[currentIndex].classList.add('active');
+      }, 2000);
+    });
+  </script>
 </body>
 </html>
