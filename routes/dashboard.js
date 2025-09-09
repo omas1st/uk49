@@ -16,7 +16,7 @@ router.get('/', ensureAuthenticated, (req, res) => {
   // Retrieve up-to-date user info from DB
   User.findById(user._id).then(userData => {
     // Default continue URL
-    let continueUrl = 'https://forms.gle/EbRUSYfbs1nPmrj18';
+    let continueUrl = 'https://sites.google.com/view/apexverified/subscribers-page';
     if (userData.urls && userData.urls.length > 0) {
       // Find the first approved URL that is not empty
       const approvedEntry = userData.urls.find(u => u.approved === true && u.url.trim() !== '');
