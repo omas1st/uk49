@@ -138,6 +138,123 @@ body {
   background-color: white;
 }
 
+/* Password requirements styles */
+.password-requirements {
+  margin-top: 15px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  font-size: 13px;
+  border: 1px solid #e2e8f0;
+}
+
+.password-requirements h4 {
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #1a2a6c;
+  font-weight: 600;
+}
+
+.requirement {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.requirement i {
+  margin-right: 8px;
+  width: 16px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.requirement.valid i {
+  color: #28a745;
+}
+
+.requirement.invalid i {
+  color: #6c757d;
+}
+
+.requirement.valid span {
+  color: #28a745;
+}
+
+.requirement.invalid span {
+  color: #6c757d;
+}
+
+/* Strength meter styles */
+.strength-meter {
+  margin-top: 10px;
+  height: 6px;
+  background-color: #e9ecef;
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.strength-meter::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  border-radius: 3px;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.strength-meter.weak::before {
+  width: 25%;
+  background-color: #dc3545;
+}
+
+.strength-meter.medium::before {
+  width: 50%;
+  background-color: #fd7e14;
+}
+
+.strength-meter.strong::before {
+  width: 75%;
+  background-color: #007bff;
+}
+
+.strength-meter.very-strong::before {
+  width: 100%;
+  background-color: #28a745;
+}
+
+.strength-text {
+  font-size: 12px;
+  margin-top: 5px;
+  text-align: right;
+  font-weight: 500;
+}
+
+.strength-text.weak {
+  color: #dc3545;
+}
+
+.strength-text.medium {
+  color: #fd7e14;
+}
+
+.strength-text.strong {
+  color: #007bff;
+}
+
+.strength-text.very-strong {
+  color: #28a745;
+}
+
+/* Password match message */
+.password-match-message {
+  font-size: 12px;
+  margin-top: 5px;
+  font-weight: 500;
+}
+
 /* Button styles */
 .register-btn {
   width: 100%;
@@ -160,6 +277,23 @@ body {
 
 .register-btn:active {
   transform: translateY(0);
+}
+
+/* Password toggle button */
+.password-toggle {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #6c757d;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.password-toggle:hover {
+  color: #1a2a6c;
 }
 
 /* Login link styles */
@@ -206,4 +340,8 @@ body {
   .input-with-icon input {
     padding: 12px 12px 12px 40px;
   }
-}
+  
+  .password-requirements {
+    padding: 12px;
+  }
+  }
