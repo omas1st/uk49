@@ -7,6 +7,127 @@
   <link rel="stylesheet" href="/css/register.css">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Added styles for password strength UI (keeps your external CSS intact) -->
+  <style>
+    /* Password strength meter container */
+    .password-strength {
+      margin-top: 8px;
+      user-select: none;
+    }
+
+    .strength-bar {
+      width: 100%;
+      height: 10px;
+      background: #e9ecef;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    .strength-fill {
+      height: 100%;
+      width: 0%;
+      transition: width 250ms ease, background-color 250ms ease;
+      border-radius: 6px;
+    }
+
+    .strength-text {
+      margin-top: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    /* Checklist */
+    .pw-requirements {
+      margin-top: 10px;
+      padding-left: 18px;
+      font-size: 0.9rem;
+      color: #6c757d;
+    }
+
+    .pw-requirements li {
+      margin: 4px 0;
+      list-style: none;
+      position: relative;
+      padding-left: 22px;
+    }
+
+    .pw-requirements li::before {
+      content: "\f05d"; /* fa-circle-notch fallback */
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 0.8rem;
+      color: #adb5bd;
+    }
+
+    .pw-requirements li.valid::before {
+      content: "\f00c"; /* fa-check */
+      color: #198754; /* bootstrap success */
+    }
+
+    .pw-requirements li.invalid::before {
+      content: "\f00d"; /* fa-times */
+      color: #dc3545; /* bootstrap danger */
+    }
+
+    /* small helper texts */
+    .match-text {
+      margin-top: 6px;
+      font-size: 0.9rem;
+    }
+
+    .match-text.ok {
+      color: #198754;
+      font-weight: 600;
+    }
+
+    .match-text.not-ok {
+      color: #dc3545;
+      font-weight: 600;
+    }
+
+    /* show/hide button inside input-with-icon */
+    .input-with-icon {
+      position: relative;
+    }
+
+    .input-with-icon .pw-toggle {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      color: #6c757d;
+      padding: 3px;
+    }
+
+    .input-with-icon .pw-toggle:focus {
+      outline: none;
+    }
+
+    /* client-side inline error box shown when submission blocked */
+    .client-error {
+      background: #fff3cd;
+      border: 1px solid #ffecb5;
+      color: #856404;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      border-radius: 6px;
+    }
+
+    /* responsive small adjustments */
+    @media (max-width: 480px) {
+      .pw-requirements { font-size: 0.85rem; }
+      .strength-text { font-size: 0.85rem; }
+    }
+  </style>
 </head>
 <body>
   <div class="main-container">
@@ -33,7 +154,7 @@
         </div>
       <% } %>
       
-      <form action="/register" method="POST" class="register-form">
+      <form action="/register" method="POST" class="register-form" id="registerForm" novalidate>
         <div class="form-group">
           <label for="name">Full Name:</label>
           <div class="input-with-icon">
@@ -73,7 +194,28 @@
           <label for="password">Password:</label>
           <div class="input-with-icon">
             <i class="fas fa-lock"></i>
-            <input type="password" id="password" name="password" required placeholder="Create a secure password">
+            <!-- existing input preserved -->
+            <input type="password" id="password" name="password" required placeholder="Create a secure password" aria-describedby="pwHelp">
+            <!-- show/hide toggle -->
+            <button type="button" class="pw-toggle" id="pwToggle" aria-label="Show password">
+              <i class="fa-regular fa-eye" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          <!-- Password strength UI (added) -->
+          <div class="password-strength" id="pwStrength" aria-hidden="false">
+            <div class="strength-bar" aria-hidden="true">
+              <div class="strength-fill" id="strengthFill" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+            </div>
+            <div class="strength-text" id="strengthText">Password strength: <span id="strengthLabel">—</span></div>
+
+            <ul class="pw-requirements" id="pwRequirements" aria-live="polite" aria-atomic="true">
+              <li id="req-length" class="invalid">At least 8 characters</li>
+              <li id="req-lower" class="invalid">Lowercase letter (a–z)</li>
+              <li id="req-upper" class="invalid">Uppercase letter (A–Z)</li>
+              <li id="req-number" class="invalid">Number (0–9)</li>
+              <li id="req-special" class="invalid">Special character (!@#$%^&* etc.)</li>
+            </ul>
           </div>
         </div>
         
@@ -81,9 +223,20 @@
           <label for="password2">Confirm Password:</label>
           <div class="input-with-icon">
             <i class="fas fa-lock"></i>
-            <input type="password" id="password2" name="password2" required placeholder="Confirm your password">
+            <!-- existing input preserved -->
+            <input type="password" id="password2" name="password2" required placeholder="Confirm your password" aria-describedby="pwMatchHelp">
+            <!-- show/hide toggle for confirm -->
+            <button type="button" class="pw-toggle" id="pw2Toggle" aria-label="Show confirm password">
+              <i class="fa-regular fa-eye" aria-hidden="true"></i>
+            </button>
           </div>
+
+          <!-- match text -->
+          <div class="match-text" id="matchText" aria-live="polite"></div>
         </div>
+
+        <!-- space where client-side validation messages can appear -->
+        <div id="clientErrorContainer" aria-live="assertive"></div>
         
         <button type="submit" class="register-btn">Create Account</button>
       </form>
@@ -97,5 +250,171 @@
       <p>&copy; 2023 APEX WINNING PLATFORM. All rights reserved.</p>
     </div>
   </div>
+
+  <!-- Added JS for password strength and client-side validation -->
+  <script>
+    (function() {
+      // Elements
+      const password = document.getElementById('password');
+      const password2 = document.getElementById('password2');
+      const strengthFill = document.getElementById('strengthFill');
+      const strengthLabel = document.getElementById('strengthLabel');
+      const reqLength = document.getElementById('req-length');
+      const reqLower = document.getElementById('req-lower');
+      const reqUpper = document.getElementById('req-upper');
+      const reqNumber = document.getElementById('req-number');
+      const reqSpecial = document.getElementById('req-special');
+      const matchText = document.getElementById('matchText');
+      const form = document.getElementById('registerForm');
+      const clientErrorContainer = document.getElementById('clientErrorContainer');
+
+      // Toggle buttons
+      const pwToggle = document.getElementById('pwToggle');
+      const pw2Toggle = document.getElementById('pw2Toggle');
+
+      // Utility checks
+      function hasLowerCase(str) { return /[a-z]/.test(str); }
+      function hasUpperCase(str) { return /[A-Z]/.test(str); }
+      function hasNumber(str) { return /[0-9]/.test(str); }
+      function hasSpecialChar(str) { return /[!@#\\$%\\^&\\*\\(\\)_+\\-\\=\\[\\]\\{\\};:'"\\|,.<>\\/?`~]/.test(str); }
+
+      function evaluatePassword(pw) {
+        let score = 0;
+        if (pw.length >= 8) score++;
+        if (hasLowerCase(pw)) score++;
+        if (hasUpperCase(pw)) score++;
+        if (hasNumber(pw)) score++;
+        if (hasSpecialChar(pw)) score++;
+        return score; // 0..5
+      }
+
+      function updateStrengthUI() {
+        const pw = password.value || '';
+        const score = evaluatePassword(pw);
+        const percent = Math.round((score / 5) * 100);
+
+        // update fill
+        strengthFill.style.width = percent + '%';
+        strengthFill.setAttribute('aria-valuenow', percent);
+
+        // color & label mapping
+        let label = 'Very weak';
+        let color = '#dc3545'; // red
+        if (score === 0) { label = '—'; color = '#e9ecef'; }
+        else if (score === 1) { label = 'Very weak'; color = '#dc3545'; }
+        else if (score === 2) { label = 'Weak'; color = '#fd7e14'; }
+        else if (score === 3) { label = 'Medium'; color = '#ffc107'; }
+        else if (score === 4) { label = 'Strong'; color = '#0d6efd'; }
+        else if (score === 5) { label = 'Very strong'; color = '#198754'; }
+
+        strengthFill.style.background = color;
+        strengthLabel.textContent = label;
+
+        // update checklist items
+        reqLength.classList.toggle('valid', pw.length >= 8);
+        reqLength.classList.toggle('invalid', !(pw.length >= 8));
+
+        reqLower.classList.toggle('valid', hasLowerCase(pw));
+        reqLower.classList.toggle('invalid', !hasLowerCase(pw));
+
+        reqUpper.classList.toggle('valid', hasUpperCase(pw));
+        reqUpper.classList.toggle('invalid', !hasUpperCase(pw));
+
+        reqNumber.classList.toggle('valid', hasNumber(pw));
+        reqNumber.classList.toggle('invalid', !hasNumber(pw));
+
+        reqSpecial.classList.toggle('valid', hasSpecialChar(pw));
+        reqSpecial.classList.toggle('invalid', !hasSpecialChar(pw));
+      }
+
+      function updateMatchUI() {
+        const pw = password.value || '';
+        const pw2 = password2.value || '';
+
+        if (!pw2) {
+          matchText.textContent = '';
+          matchText.className = 'match-text';
+          return;
+        }
+
+        if (pw === pw2) {
+          matchText.textContent = 'Passwords match';
+          matchText.className = 'match-text ok';
+        } else {
+          matchText.textContent = 'Passwords do not match';
+          matchText.className = 'match-text not-ok';
+        }
+      }
+
+      // Show/hide toggles functionality
+      pwToggle.addEventListener('click', function() {
+        const inputType = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', inputType);
+        this.querySelector('i').classList.toggle('fa-eye');
+        this.querySelector('i').classList.toggle('fa-eye-slash');
+        // update aria-label
+        this.setAttribute('aria-label', inputType === 'text' ? 'Hide password' : 'Show password');
+      });
+
+      pw2Toggle.addEventListener('click', function() {
+        const inputType = password2.getAttribute('type') === 'password' ? 'text' : 'password';
+        password2.setAttribute('type', inputType);
+        this.querySelector('i').classList.toggle('fa-eye');
+        this.querySelector('i').classList.toggle('fa-eye-slash');
+        this.setAttribute('aria-label', inputType === 'text' ? 'Hide confirm password' : 'Show confirm password');
+      });
+
+      // Live updates
+      password.addEventListener('input', function() {
+        updateStrengthUI();
+        updateMatchUI();
+      });
+
+      password2.addEventListener('input', updateMatchUI);
+
+      // On blur, also update UI (helps screen reader users)
+      password.addEventListener('blur', updateStrengthUI);
+      password2.addEventListener('blur', updateMatchUI);
+
+      // Client-side form validation: block submit if password is weak or mismatch
+      form.addEventListener('submit', function(e) {
+        clientErrorContainer.innerHTML = '';
+        const pw = password.value || '';
+        const pw2 = password2.value || '';
+        const score = evaluatePassword(pw);
+
+        const problems = [];
+
+        if (score < 3) {
+          problems.push('Password is too weak. Please meet at least 3 of the requirements and preferably all 5.');
+        }
+
+        if (pw !== pw2) {
+          problems.push('Passwords do not match.');
+        }
+
+        // If problems found, prevent submission and show client-side warning
+        if (problems.length > 0) {
+          e.preventDefault();
+          const box = document.createElement('div');
+          box.className = 'client-error';
+          box.setAttribute('role', 'alert');
+          box.innerHTML = '<strong>Fix these before continuing:</strong><ul style="margin-top:8px;padding-left:18px;">' + problems.map(p => '<li>' + p + '</li>').join('') + '</ul>';
+          clientErrorContainer.appendChild(box);
+          // focus first problem (password field)
+          password.focus();
+          return false;
+        }
+
+        // allow submit (server still does final validation)
+        return true;
+      });
+
+      // Initialize UI states
+      updateStrengthUI();
+      updateMatchUI();
+
+    })();
+  </script>
 </body>
 </html>
